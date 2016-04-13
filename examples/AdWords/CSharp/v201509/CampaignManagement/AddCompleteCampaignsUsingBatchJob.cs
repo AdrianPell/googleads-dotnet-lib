@@ -67,7 +67,7 @@ namespace Google.Api.Ads.AdWords.Examples.CSharp.v201509 {
     /// pending state.
     /// </summary>
     private readonly HashSet<BatchJobStatus> PENDING_STATUSES = new HashSet<BatchJobStatus>() {
-      BatchJobStatus.ACTIVE, BatchJobStatus.AWAITING_FILE
+      BatchJobStatus.ACTIVE, BatchJobStatus.AWAITING_FILE, BatchJobStatus.CANCELING
     };
 
     /// <summary>
@@ -171,7 +171,9 @@ namespace Google.Api.Ads.AdWords.Examples.CSharp.v201509 {
           Thread.Sleep(sleepMillis);
 
           Selector selector = new Selector() {
-            fields = new string[] { BatchJob.Fields.Id, BatchJob.Fields.Status },
+            fields = new string[] { BatchJob.Fields.Id, BatchJob.Fields.Status,
+                BatchJob.Fields.DownloadUrl, BatchJob.Fields.ProcessingErrors,
+                BatchJob.Fields.ProgressStats },
             predicates = new Predicate[] {
               Predicate.Equals(BatchJob.Fields.Id, batchJob.id)
             }
